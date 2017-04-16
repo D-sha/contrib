@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+//This needs to be adjusted
+group = 'com.onionnetworks'
+libsDirName = "lib"
+subprojects {
+	apply plugin: 'java'
+}
+	
+project(':tools') {
+	
+	sourceSets {
+		main {
+			
+			java {
+				archivesBaseName = "onion-common-tools"
+				//destinationDir = file("${buildDir}/libs")
+				srcDir 'tools/src'
+				 }
+			 }
+	}
+}
+
+publishing {
+    repositories {
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+            // url "mvn.freenetproject.org"
+            url "$buildDir/repo"	
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+        from components.java
+        }
+    }
+}
